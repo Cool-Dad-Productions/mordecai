@@ -149,8 +149,8 @@ export const BranchPrevious = ({
     <Button
       aria-label="Previous branch"
       className={cn(
-        "size-7 shrink-0 rounded-full text-muted-foreground transition-colors",
-        "hover:bg-accent hover:text-foreground",
+        "size-7 shrink-0 rounded-full text-muted-foreground transition-shadow",
+        "hover:glow-red hover:text-foreground",
         "disabled:pointer-events-none disabled:opacity-50",
         className
       )}
@@ -179,8 +179,8 @@ export const BranchNext = ({
     <Button
       aria-label="Next branch"
       className={cn(
-        "size-7 shrink-0 rounded-full text-muted-foreground transition-colors",
-        "hover:bg-accent hover:text-foreground",
+        "size-7 shrink-0 rounded-full text-muted-foreground transition-shadow",
+        "hover:glow-red hover:text-foreground",
         "disabled:pointer-events-none disabled:opacity-50",
         className
       )}

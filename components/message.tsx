@@ -242,7 +242,7 @@ const PurePreviewMessage = ({
                             Deny
                           </button>
                           <button
-                            className="rounded-md bg-primary px-3 py-1.5 text-primary-foreground text-sm transition-colors hover:bg-primary/90"
+                            className="rounded-md bg-primary px-3 py-1.5 text-primary-foreground text-sm transition-shadow hover:glow-red"
                             onClick={() => {
                               addToolApprovalResponse({
                                 id: approvalId,

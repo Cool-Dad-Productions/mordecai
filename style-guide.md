@@ -44,6 +44,8 @@ Our palette is stark and high-contrast. It relies heavily on pure black to make 
 The "System Red" is rarely flat. To mimic the source image, active elements should utilize an outer glow (box-shadow in CSS).
 
 * **Standard Glow CSS:** `box-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000;`
+* **Tailwind Utility:** Use `glow-red` or `glow-red-intense` classes
+* **Hover States:** All interactive elements use the glow effect on hover rather than changing background colors. This creates a consistent, intense aesthetic across the UI.
 
 ## 3.0 Typography
 
