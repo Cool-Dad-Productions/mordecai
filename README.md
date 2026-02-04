@@ -1,71 +1,149 @@
-<a href="https://chat.vercel.ai/">
-  <img alt="Next.js 14 and App Router-ready AI chatbot." src="app/(chat)/opengraph-image.png">
-  <h1 align="center">Chat SDK</h1>
-</a>
+# Mordecai
 
-<p align="center">
-    Chat SDK is a free, open-source template built with Next.js and the AI SDK that helps you quickly build powerful chatbot applications.
-</p>
+A cynical, world-weary AI assistant who just wants to keep you alive.
 
-<p align="center">
-  <a href="https://chat-sdk.dev"><strong>Read Docs</strong></a> ·
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#model-providers"><strong>Model Providers</strong></a> ·
-  <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
-  <a href="#running-locally"><strong>Running locally</strong></a>
-</p>
-<br/>
+## What is Mordecai?
+
+Mordecai is an AI chatbot with personality. Inspired by the Dungeon Manager character from the *Dungeon Crawler Carl* LitRPG series, Mordecai acts as a veteran mentor who has seen too many people fail. He's tired of bureaucracy, blunt about your shortcomings, but ultimately wants you to succeed.
+
+Behind the grumbling, Mordecai provides expert assistance on any topic—whether it's coding, writing, or cooking—because "shoddy work gets people killed."
 
 ## Features
 
-- [Next.js](https://nextjs.org) App Router
-  - Advanced routing for seamless navigation and performance
-  - React Server Components (RSCs) and Server Actions for server-side rendering and increased performance
-- [AI SDK](https://ai-sdk.dev/docs/introduction)
-  - Unified API for generating text, structured objects, and tool calls with LLMs
-  - Hooks for building dynamic chat and generative user interfaces
-  - Supports xAI (default), OpenAI, Fireworks, and other model providers
-- [shadcn/ui](https://ui.shadcn.com)
-  - Styling with [Tailwind CSS](https://tailwindcss.com)
-  - Component primitives from [Radix UI](https://radix-ui.com) for accessibility and flexibility
-- Data Persistence
-  - [Neon Serverless Postgres](https://vercel.com/marketplace/neon) for saving chat history and user data
-  - [Vercel Blob](https://vercel.com/storage/blob) for efficient file storage
-- [Auth.js](https://authjs.dev)
-  - Simple and secure authentication
+- **The Mordecai Persona** - No cheerful AI platitudes here. Expect cynical wisdom, colorful language, and genuinely helpful advice delivered with veteran pragmatism.
 
-## Model Providers
+- **Multi-Model Support** - Switch between Claude, GPT, and Gemini models via Vercel AI Gateway.
 
-This template uses the [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) to access multiple AI models through a unified interface. The default configuration includes [xAI](https://x.ai) models (`grok-2-vision-1212`, `grok-3-mini`) routed through the gateway.
+- **Document Artifacts** - Create and edit code snippets, text documents, and spreadsheets in a side panel while chatting.
 
-### AI Gateway Authentication
+- **Resumable Streams** - Conversations persist and can resume even if interrupted, powered by Redis.
 
-**For Vercel deployments**: Authentication is handled automatically via OIDC tokens.
+- **Real-time Streaming** - Responses stream in as they're generated for a responsive experience.
 
-**For non-Vercel deployments**: You need to provide an AI Gateway API key by setting the `AI_GATEWAY_API_KEY` environment variable in your `.env.local` file.
+## Tech Stack
 
-With the [AI SDK](https://ai-sdk.dev/docs/introduction), you can also switch to direct LLM providers like [OpenAI](https://openai.com), [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), and [many more](https://ai-sdk.dev/providers/ai-sdk-providers) with just a few lines of code.
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 16 (App Router) |
+| AI | Vercel AI SDK + AI Gateway |
+| Database | PostgreSQL + Drizzle ORM |
+| Auth | Auth.js |
+| Streaming | Redis (resumable streams) |
+| Storage | Vercel Blob |
+| Styling | Tailwind CSS + shadcn/ui |
+| Linting | Ultracite (Biome-based) |
 
-## Deploy Your Own
+## Getting Started
 
-You can deploy your own version of the Next.js AI Chatbot to Vercel with one click:
+### Prerequisites
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/templates/next.js/nextjs-ai-chatbot)
+- Node.js 18+
+- pnpm 9+
+- PostgreSQL database
+- Redis (optional, for resumable streams)
 
-## Running locally
+### Installation
 
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js AI Chatbot. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables) for this, but a `.env` file is all that is necessary.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/mordecai.git
+   cd mordecai
+   ```
 
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control access to your various AI and authentication provider accounts.
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
+3. Copy the example environment file and configure it:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+4. Run database migrations:
+   ```bash
+   pnpm db:migrate
+   ```
+
+5. Start the development server:
+   ```bash
+   pnpm dev
+   ```
+
+The app will be running at [localhost:3000](http://localhost:3000).
+
+## Environment Variables
+
+### Required
+
+| Variable | Description |
+|----------|-------------|
+| `AUTH_SECRET` | Secret key for session encryption |
+| `POSTGRES_URL` | PostgreSQL connection string |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob storage token |
+
+### Optional
+
+| Variable | Description |
+|----------|-------------|
+| `AI_GATEWAY_API_KEY` | Required only for non-Vercel deployments |
+| `REDIS_URL` | Enables resumable streams |
+
+## Available Commands
 
 ```bash
-pnpm install
-pnpm db:migrate # Setup database or apply latest database changes
-pnpm dev
+pnpm dev              # Start development server (with Turbo)
+pnpm build            # Build for production + run migrations
+pnpm start            # Start production server
+pnpm lint             # Check code with Ultracite
+pnpm format           # Auto-fix code style issues
+pnpm test             # Run Playwright E2E tests
+pnpm db:migrate       # Apply database migrations
+pnpm db:generate      # Generate migrations from schema changes
+pnpm db:studio        # Open Drizzle Studio UI
 ```
 
-Your app template should now be running on [localhost:3000](http://localhost:3000).
+## Deployment
+
+### Vercel (Recommended)
+
+The easiest way to deploy is with Vercel:
+
+1. Push your code to GitHub
+2. Import the project in Vercel
+3. Configure environment variables
+4. Deploy
+
+Authentication with AI Gateway is handled automatically on Vercel via OIDC tokens.
+
+### Other Platforms
+
+For non-Vercel deployments, you'll need to:
+
+1. Set the `AI_GATEWAY_API_KEY` environment variable
+2. Ensure PostgreSQL and Redis (optional) are accessible
+3. Run `pnpm build` and `pnpm start`
+
+## Project Structure
+
+```
+├── app/
+│   ├── (auth)/          # Authentication routes
+│   └── (chat)/          # Chat interface and API routes
+├── components/
+│   └── ui/              # shadcn/ui primitives
+├── lib/
+│   ├── ai/
+│   │   ├── models.ts    # Model definitions
+│   │   ├── prompts.ts   # System prompts (Mordecai's personality)
+│   │   ├── providers.ts # AI Gateway setup
+│   │   └── tools/       # AI tools (weather, documents, suggestions)
+│   └── db/
+│       ├── schema.ts    # Database schema
+│       └── queries.ts   # Database operations
+└── tests/               # Playwright E2E tests
+```
+
+## License
+
+MIT
